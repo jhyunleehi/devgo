@@ -1,0 +1,18 @@
+# github.com/go-echarts/go-echarts/v2 v2.2.6
+## explicit; go 1.15
+github.com/go-echarts/go-echarts/v2/actions
+github.com/go-echarts/go-echarts/v2/charts
+github.com/go-echarts/go-echarts/v2/components
+github.com/go-echarts/go-echarts/v2/datasets
+github.com/go-echarts/go-echarts/v2/opts
+github.com/go-echarts/go-echarts/v2/render
+github.com/go-echarts/go-echarts/v2/templates
+github.com/go-echarts/go-echarts/v2/types
+# github.com/sirupsen/logrus v1.9.0
+## explicit; go 1.13
+github.com/sirupsen/logrus
+# golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+golang.org/x/sys/windows
