@@ -290,10 +290,6 @@ func (t *Trend) GetRelKeywordItem(searchword string) error {
 ![image](https://user-images.githubusercontent.com/13324737/174476775-19740eee-0e63-4196-9041-e4a6ab1ec950.png)
 
 
-![image](https://github.com/jhyunleehi/devgo/assets/13324737/deb996a5-fcab-4567-b366-c6a418a2c57c)
-
-
-
 
 
 ### step7. Web 서비스
