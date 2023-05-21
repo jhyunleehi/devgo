@@ -24,7 +24,7 @@ func Test_T1(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 		return
-	}
+	} 
 	defer jsonFile.Close()
 	byteValue, err := ioutil.ReadAll(jsonFile)
 	if err != nil {
