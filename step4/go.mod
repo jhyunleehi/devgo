@@ -1,4 +1,4 @@
-module gtrend/step4
+module devgo/step4
 
 go 1.19
 

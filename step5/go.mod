@@ -1,4 +1,4 @@
-module gtrend/step5
+module devgo/step5
 
 go 1.19
 

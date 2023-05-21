@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gtrend/step5/finance"
+	"devgo/step5/finance"
 	"testing"
 	"time"
 

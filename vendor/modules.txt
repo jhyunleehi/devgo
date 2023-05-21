@@ -6,9 +6,6 @@ github.com/PuerkitoBio/goquery
 github.com/anaskhan96/soup
 # github.com/andybalholm/cascadia v1.3.1
 github.com/andybalholm/cascadia
-# github.com/antonfisher/nested-logrus-formatter v1.3.1
-## explicit
-github.com/antonfisher/nested-logrus-formatter
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
 # github.com/go-echarts/go-echarts/v2 v2.2.4
