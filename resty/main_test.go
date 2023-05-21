@@ -2,8 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
+	"errors"	
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -14,36 +13,65 @@ import (
 
 func Test_T1(t *testing.T) {
 
-	// Open our jsonFile
-	jsonFile, err := os.Open("jcollection.json")
-	// if we os.Open returns an error then handle it
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Successfully Opened users.json")
-	// defer the closing of our jsonFile so that we can parse it later on
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	collection := "jcollection.json"
+	envfile := "jenvironment.json"
 
 	var jdata map[string]interface{}
-	err = json.Unmarshal([]byte(byteValue), &jdata)
+	var jenv map[string]interface{}
+	// Open our jsonFile
+	jsonFile, err := os.Open(collection)
+	// if we os.Open returns an error then handle it
 	if err != nil {
-		log.Error(err)
+		t.Error(err)
 		return
 	}
-	fmt.Printf("[%+v]", jdata)
-	err = ListRestApi(jdata)
+	defer jsonFile.Close()
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = json.Unmarshal([]byte(byteValue), &jdata)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	//fmt.Printf("[%+v]", jdata)
+	envFile, err := os.Open(envfile)
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	defer jsonFile.Close()
+	byteValue, err = ioutil.ReadAll(envFile)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = json.Unmarshal([]byte(byteValue), &jenv)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	err = ListRestApi(jdata, jenv)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	r := NewResty("")
+	err = r.MakeEnv(jenv)
 	if err != nil {
 		t.Error(err)
 	}
-	err = CallRestApi(jdata)
+	err = r.CallRestApi(jdata)
 	if err != nil {
 		t.Error(err)
 	}
 }
 
-func ListRestApi(i interface{}) error {
+func ListRestApi(i interface{}, e interface{}) error {
 	t := reflect.TypeOf(i)
 	if t.String() != "map[string]interface {}" {
 		log.Error(t.String())
@@ -64,7 +92,7 @@ func ListRestApi(i interface{}) error {
 	if ok {
 		for _, v := range vallist.([]interface{}) {
 			//log.Debugf("[%d][%v]", k, v)
-			err := ListRestApi(v)
+			err := ListRestApi(v, e)
 			if err != nil {
 				log.Error(err)
 				return err
@@ -74,7 +102,8 @@ func ListRestApi(i interface{}) error {
 	return nil
 }
 
-func CallRestApi(i interface{}) error {
+/*
+func CallRestApi(i interface{}, e interface{}) error {
 	item, ok := i.(map[string]interface{})
 	if !ok {
 		log.Errorf("[%v]", i)
@@ -94,7 +123,7 @@ func CallRestApi(i interface{}) error {
 	if ok {
 		for _, v := range vallist.([]interface{}) {
 			//log.Debugf("[%d][%v]", k, v)
-			err := CallRestApi(v)
+			err := CallRestApi(v, e)
 			if err != nil {
 				log.Error(err)
 				return err
@@ -109,3 +138,4 @@ func CallRestApi(i interface{}) error {
 	}
 	return nil
 }
+*/

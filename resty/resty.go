@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"reflect"
 	"sync"
 	"time"
 
@@ -26,6 +27,7 @@ type Resty struct {
 	name    string
 	client  *resty.Client
 	request *resty.Request
+	env     map[string]string
 	mutex   sync.Mutex
 }
 
@@ -33,6 +35,7 @@ func NewResty(name string) *Resty {
 	r := Resty{
 		name: name,
 	}
+	r.env = make(map[string]string)
 	r.client = resty.New()
 	//r.client.SetDebug(true)
 	r.client.SetDebug(false)
@@ -40,6 +43,63 @@ func NewResty(name string) *Resty {
 	r.client.SetTimeout(1 * time.Minute)
 	r.request = r.client.R()
 	return &r
+}
+
+func (r *Resty) MakeEnv(env interface{}) error {
+	item, ok := env.(map[string]interface{})
+	if !ok {
+		log.Errorf("[%v]", env)
+		return errors.New("fail convert type")
+	}
+	t := reflect.TypeOf(env)
+	if t.String() != "map[string]interface {}" {
+		log.Error(t.String())
+		return errors.New("failed convert type")
+	}
+
+	values, ok := item["values"]
+	if ok {
+		for _, val := range values.([]interface{}) {
+			v := val.(map[string]interface{})
+			r.env[v["key"].(string)] = v["value"].(string)
+		}
+	}
+	return nil
+}
+
+func (r *Resty) CallRestApi(i interface{}) error {
+	item, ok := i.(map[string]interface{})
+	if !ok {
+		log.Errorf("[%v]", i)
+		return errors.New("fail convert type")
+	}
+	t := reflect.TypeOf(i)
+	if t.String() != "map[string]interface {}" {
+		log.Error(t.String())
+		return errors.New("failed convert type")
+	}
+
+	val, ok := item["name"]
+	if ok {
+		log.Printf("TEST: [%s]", val)
+	}
+	vallist, ok := item["item"]
+	if ok {
+		for _, v := range vallist.([]interface{}) {
+			//log.Debugf("[%d][%v]", k, v)
+			err := r.CallRestApi(v)
+			if err != nil {
+				log.Error(err)
+				return err
+			}
+		}
+	}
+	err := r.RestApi(item)
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+	return nil
 }
 
 func (r *Resty) RestApi(restitem interface{}) error {
