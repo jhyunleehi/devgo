@@ -1,0 +1,31 @@
+[
+  {
+    "_id": "6b8bd5b4-274a-4fab-b8c3-00b1568880de",
+    "name": "(Local Env)",
+    "default": false,
+    "global": true,
+    "local": true,
+    "sortNum": -1,
+    "created": "2023-05-28T02:51:44.557Z",
+    "modified": "2023-05-28T02:51:44.557Z",
+    "data": []
+  },
+  {
+    "_id": "1a250f4b-d08f-47c9-a0b4-8f12c39c2621",
+    "name": "REST-API",
+    "default": true,
+    "sortNum": 9999,
+    "created": "2023-05-28T02:51:54.067Z",
+    "modified": "2023-05-28T02:51:54.067Z",
+    "data": [
+      {
+        "name": "RestApi-Key",
+        "value": "1a2f23bcb8f5f24588f1420efc1edb8e"
+      },
+      {
+        "name": "Admin-Key",
+        "value": "9b2679e09484abd72fed9bf38579d618"
+      }
+    ]
+  }
+]
