@@ -1,0 +1,28 @@
+package clientv3etcd
+
+import (
+	"context"
+	"time"
+
+	"github.com/coreos/etcd/clientv3"
+)
+
+var (
+	dialTimeout    = 2 * time.Second
+	requestTimeout = 10 * time.Second
+)
+
+func main() {
+	ctx, _ := context.WithTimeout(context.Background(), requestTimeout)
+	cli, _ := clientv3.New(clientv3.Config{
+		DialTimeout: dialTimeout,
+		Endpoints:   []string{"192.168.57.20:62379"},
+	})
+	defer cli.Close()
+	kv := clientv3.NewKV(cli)
+
+	cli.Put(ctx, "k1", "v1")
+	cli.put(ctx, "k2", "v2")
+	cli.Get(ctx, "k1")
+
+}

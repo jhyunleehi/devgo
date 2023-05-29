@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gtrend/trend"
+	"devgo/trend"
 	"testing"
 
 	"github.com/stretchr/testify/suite"	

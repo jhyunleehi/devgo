@@ -1,7 +1,0 @@
-go 1.19
-
-use (
-	./resty
-	./step4
-	./step5
-)

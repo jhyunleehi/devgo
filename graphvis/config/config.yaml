@@ -1,0 +1,49 @@
+# Environment Name
+env_name: graphviz-config
+
+# Gin Framework Setting:
+storage:  
+  netapp:
+    name: netapp
+    endpoint: 192.168.56.10
+    username: admin
+    passwd: admin
+  hpe3par:    
+    name: hpe3par
+    endpoint: 192.168.56.11:8080
+    username: 3paradm
+    passwd: 3pardata
+  ceph:    
+    name: ceph
+    endpoint: 192.168.56.31:8080
+    username: admin
+    passwd: admin
+    
+# DB Connection Information
+mariadb:
+  username: root
+  password: ENC(NUqmmDgcOXw28ARSV9th4xbwQ9cLZJoJeZKYQ2i1izgs46I=)  
+  dbname: so
+  address: tcp(127.0.0.1:3306)
+
+# Logging Setting (Using Logrus)
+logging:
+  level: debug  
+  formatter: text 
+  writer:   
+    - console
+    - file
+  directory: C:/so-logs
+  caller_tracing: true    #true/false
+  coloring: false    #true/false
+
+# Secure Setting (API Auth, Access Limit, SSL, ...)
+secure:
+  api_auth:
+    auth_source: db    #static/db
+    https_protection_off: true    #true/false
+  access_limit:
+    whitelist_cidr: 0.0.0.0/0, 127.0.0.1/32, ::1/128
+  ssl:
+    cert_file: common/secure/testcert/localhost.crt
+    key_file: common/secure/testcert/localhost.key
