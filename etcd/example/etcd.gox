@@ -1,0 +1,96 @@
+package main
+
+import (
+	"context"		
+	"time"
+	"log"
+	"strconv"
+
+	"go.etcd.io/etcd/clientv3"
+	
+)
+
+var (
+	timeOut      = 3 * time.Second
+	retryNum     = 3
+	pwdEncrypter = "aes"
+)
+
+type Etcd struct {
+	cli  *clientv3.Client	
+}
+func Init(){
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+}
+
+
+func NewEtcd() (*Etcd, error) {
+	var err error
+	etcd := Etcd{}
+	etcd.cli, err = clientv3.New(
+		clientv3.Config{
+			Endpoints: []string{ "192.168.39.6:62379", "192.168.39.6:62380"},
+			DialTimeout: 5*time.Second,
+		},
+	)
+	if err !=nil {
+		log.Printf("error")
+		return &etcd, err
+	}
+	return &etcd,nil	
+}
+
+func (e *Etcd) Put (key string, value string) (string, error){
+	ctx, cancel := context.WithTimeout(context.Background(), timeOut)
+	resp, err := e.cli.Put(ctx, key, value)
+	defer cancel()
+	if err != nil{
+		log.Printf("error %+v %+v", resp, nil)
+		return string("error"), err
+	}
+	log.Printf("%+v", resp)
+	return string("ok"), err
+}
+
+func (e *Etcd) Get (key string) (string, error){
+	ctx, cancel := context.WithTimeout(context.Background(), timeOut)
+	resp, err := e.cli.Get(ctx, key)
+	defer cancel()
+	if err != nil{
+		log.Printf("error %+v %+v", resp, nil)
+		return string("error"), err
+	}
+	log.Printf("%+v", resp)
+	return string("ok"), err
+}
+
+func (e *Etcd) Delete (key string) (string, error){
+	ctx, cancel := context.WithTimeout(context.Background(), timeOut)
+	resp, err := e.cli.Delete(ctx, key)
+	defer cancel()
+	if err != nil{
+		log.Printf("error %+v %+v", resp, nil)
+		return string("error"), err
+	}
+	log.Printf("%+v", resp)
+	return string("ok"), err
+}
+
+func main(){
+	e,_ :=NewEtcd()
+	for  i:=0; i<10; i++{
+		e.Put(strconv.Itoa(i), "value"+strconv.Itoa(i) )				
+	}
+	for  i:=0; i<10; i++{
+		e.Get(strconv.Itoa(i))				
+	}
+	for  i:=0; i<10; i++{
+		e.Delete(strconv.Itoa(i) )				
+	}
+	for  i:=0; i<10; i++{
+		e.Get(strconv.Itoa(i))				
+	}
+
+
+
+}
