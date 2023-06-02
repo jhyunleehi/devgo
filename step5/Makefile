@@ -1,14 +1,13 @@
-# SO Version Information
-SO_VERSION_INFO = "-X 'main.version=$$(git describe --tags --abbrev=0)' -X 'main.date=$$(date +%F)' -X 'main.commit=$$(git rev-parse --short HEAD)'"
 
-# Image URL to use all building/pushing image targets
-SO_VER = "$$(git describe --tags --abbrev=0)"
-IMG_VER = "$$(echo $(SO_VER)| sed -e s/v//g)"
+VERSION_INFO = "-X 'main.version=$$(git describe --tags --abbrev=0)' -X 'main.date=$$(date +%F)' -X 'main.commit=$$(git rev-parse --short HEAD)'"
+
+
+MY_VER = "$$(git describe --tags --abbrev=0)"
+IMG_VER = "$$(echo $(MY_VER)| sed -e s/v//g)"
 IMG_NAME = docker.io/jhyunleehi/gtrend:${IMG_VER}
 
-# Build th SO main binary
 main:	
-	go build -mod vendor --ldflags ${SO_VERSION_INFO} main.go
+	go build -mod vendor --ldflags ${VERSION_INFO} main.go
 
 # Build the docker image
 docker-build:
