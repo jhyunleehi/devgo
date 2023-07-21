@@ -21,3 +21,4 @@ func (s *TSuite) TestSetup() {
 	s.mytrend = trend.NewTrend("trend")
 	s.mytrend.GetInit()
 }
+
