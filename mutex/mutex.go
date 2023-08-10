@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func main() {
+func main1() {
 	var mutex = &sync.Mutex{}
 
 	total := 0

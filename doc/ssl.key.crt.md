@@ -4,9 +4,9 @@
 2. csr 파일 생성
 3. crt 파일 생성
 ```
-# openssl genrsa -out test.key 2048
-# openssl req -new -key test.key -out test.csr
-# openssl req -new -x509 -days 365 -nodes -keyout test.key -out test.crt
+# openssl genrsa -out my.key 2048
+# openssl req -new -key my.key -out my.csr
+# openssl req -new -x509 -days 365 -nodes -keyout my.key -out my.crt
 ```
 ### 명령어 
 ```
