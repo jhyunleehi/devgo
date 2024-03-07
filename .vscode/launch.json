@@ -8,6 +8,7 @@
             "name": "Launch file",
             "type": "go",
             "request": "launch",
+            "asRoot": true,
             "mode": "debug",
             "args": [
                 "-mod",
@@ -19,7 +20,8 @@
             "name": "Launch test function",
             "type": "go",
             "request": "launch",
-            "mode": "test",
+            "mode": "test",            
+            "asRoot": true,
             "program": "${workspaceFolder}",
             "args": [
                 "-mod",
